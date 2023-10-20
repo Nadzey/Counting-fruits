@@ -69,7 +69,7 @@ class FruitsPage {
     
         return outputMessage1;
       });
-    }
+    };
      
     countInTheBasketOverThreeDays() {
       return cy.task("readFromCsv").then((res) => {
