@@ -21,22 +21,24 @@ class FruitsPage {
     };
 
     countNumbersOfEachFruits(){
-      return cy.task("readFromCsv").then(res => {
-        const fruits = res.map(item => item["name"]);
-        const numbersOfFruits = fruits.reduce((acc, fruit) => {
-          if (!acc[fruit]) {
-            acc[fruit] = 1;
+      return cy.task("readFromCsv").then((res) => {
+        const totalSize = {};
+    
+        res.forEach((item) => {
+          const name = item.name;
+          const size = Number(item.size);
+    
+          if (!totalSize[name]) {
+            totalSize[name] = size;
           } else {
-            acc[fruit]++;
+            totalSize[name] += size;
           }
-          return acc;
-        }, {});
-        const lines = [];
-        for (const fruit in numbersOfFruits) {
-          lines.push(`${fruit}: ${numbersOfFruits[fruit]}`);
-        }
-        const numbersOfFruitsLines = lines.join(', ');
-        return numbersOfFruitsLines;
+        });
+    
+        const lines = Object.entries(totalSize).map(([fruit, size]) => `${fruit}: ${size}`);
+        const totalSizeLines = lines.join(', ');
+    
+        return totalSizeLines;
       });
     };
 
@@ -70,26 +72,27 @@ class FruitsPage {
     }
      
     countInTheBasketOverThreeDays() {
-      return cy.task("readFromCsv").then(res => {
+      return cy.task("readFromCsv").then((res) => {
         const basket = {};
     
-        res.forEach(item => {
+        res.forEach((item) => {
           const fruitName = item["name"];
           const days = Number(item["days"]);
+          const size = Number(item["size"]);
     
           if (days > 3) {
             if (!basket[fruitName]) {
-              basket[fruitName] = 1;
+              basket[fruitName] = size;
             } else {
-              basket[fruitName]++;
+              basket[fruitName] += size;
             }
           }
         });
     
         const outputMessage = Object.entries(basket)
-          .map(([fruit, count]) => `${count} ${fruit}`)
+          .map(([fruit, size]) => `${size} ${fruit}`)
           .join(" and ");
-        return outputMessage
+        return outputMessage;
       });
     };
     
