@@ -1,9 +1,9 @@
 # Counting-fruits
 simple application that allows a user to request a file (basket)
-## Framework Description: Cypress + JavaScript + Mocha + Chai E2E Testing for Couting fruits project
+## Framework Description: Cypress + JavaScript + Mocha + Chai E2E Testing for Counting fruits project
 
 ### Overview
-The `Cypress` framework, along with `JavaScript`, `Mocha`, and `Chai`, provides a robust end-to-end (E2E) testing solution specifically tailored for the Couting fruits project. 
+The `Cypress` framework, along with `JavaScript`, `Mocha`, and `Chai`, provides a robust end-to-end (E2E) testing solution specifically tailored for the Counting fruits project. 
 
 **How to start working in our project?**
 
