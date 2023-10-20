@@ -65,7 +65,7 @@ class FruitsPage {
     
         const outputMessage1 = Object.entries(characteristics)
         .map(([fruit, charData]) => `${charData.size} ${fruit}: ${charData.color}, ${charData.shape}`)
-        .join("\n");
+        .join(";\n");
     
         return outputMessage1;
       });
@@ -96,12 +96,12 @@ class FruitsPage {
       });
     };
     
-    writeAllDataToCsv(totalSize, totalUniqueFruitTypes, numbersOfFruitsLines, outputMessage1, outputMessage) {
+    writeAllDataToCsv(totalSize, totalUniqueFruitTypes, totalSizeLines, outputMessage1, outputMessage) {
     
       const dataToWrite = [
         { name: "Total number of fruit: ", amount: totalSize },
         { name: "Total types of fruit: ", amount: totalUniqueFruitTypes },
-        { name: "The number of each type of fruit in descending order: ", amount: numbersOfFruitsLines },
+        { name: "The number of each type of fruit in descending order: ", amount: totalSizeLines },
         { name: "The characteristics (size, color, shape, etc.) of each fruit by type: ", amount: outputMessage1 },
         { name: "Have any fruit been in the basket for over 3 days: ", amount: outputMessage },
       ];
