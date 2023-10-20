@@ -13,6 +13,7 @@ e2e: {
    setupNodeEvents(on, config) {
    screenshotOnRunFailure=true;
    require('cypress-mochawesome-reporter/plugin')(on);
+
    on("task", {
     readFromCsv()
     {
@@ -42,6 +43,22 @@ e2e: {
       });
     }
   });  
+
+  on("task", {
+    readFromNewCsv()
+    {
+      return new Promise(resolve => {
+        let dataArray = [];
+        csv.parseFile("results.csv", {headers: false})
+        .on('data', (data) => {
+          dataArray.push(data);
+        })
+        .on('end', () => {
+          resolve(dataArray)
+        })
+      })
+    }
+   });
  },
 },  
 });
