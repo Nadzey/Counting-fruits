@@ -5,7 +5,8 @@ describe('Counting fruits data from csv file', () => {
   let totalSize;
   let uniqueFruitTypes;
   let amountEachFruit;
-  let characteristics;
+  let characteristicsFruits;
+  let countOverThreeDays;
 
   it("AT_001.001 | should count amount of all fruits", () => {
     fruitsPage.countSizeFromCsv().then(size => {
@@ -27,12 +28,15 @@ describe('Counting fruits data from csv file', () => {
 
   it("AT_001.004 | characteristics (size, color, shape, etc.) of each fruit by type", () => {
     fruitsPage.characteristicsOfFruits().then(char => {
-      characteristics = char;
+      characteristicsFruits = char;
     });
+    fruitsPage.countInTheBasketOverThreeDays().then(count => {
+      countOverThreeDays = count;
+    })
   });
 
   after(() => {
-    fruitsPage.writeAllDataToCsv(totalSize, uniqueFruitTypes, amountEachFruit, characteristics);
+    fruitsPage.writeAllDataToCsv(totalSize, uniqueFruitTypes, amountEachFruit, characteristicsFruits, countOverThreeDays);
   });
 });
 
