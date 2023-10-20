@@ -52,8 +52,3 @@ describe('Counting fruits data from csv file', () => {
     });
   });  
 });
-
-
-  
-
-
