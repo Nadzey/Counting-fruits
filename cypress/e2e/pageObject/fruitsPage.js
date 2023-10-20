@@ -43,7 +43,7 @@ class FruitsPage {
     };
 
     characteristicsOfFruits() {
-      return cy.task("readFromCsv").then(res => {
+      return cy.task("readFromCsv").then((res) => {
         const characteristics = {};
     
         res.forEach(item => {
@@ -102,7 +102,7 @@ class FruitsPage {
         { name: "Total number of fruit: ", amount: totalSize },
         { name: "Total types of fruit: ", amount: totalUniqueFruitTypes },
         { name: "The number of each type of fruit in descending order: ", amount: totalSizeLines },
-        { name: "The characteristics (size, color, shape, etc.) of each fruit by type: ", amount: outputMessage1 },
+        { name: "The characteristics of each fruit by type: ", amount: outputMessage1 },
         { name: "Have any fruit been in the basket for over 3 days: ", amount: outputMessage },
       ];
     
