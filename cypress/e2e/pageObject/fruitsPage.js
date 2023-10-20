@@ -5,28 +5,35 @@ class FruitsPage {
     };
 
     countSizeFromCsv() {
+      return cy.task("readFromCsv").then(res => {
+        const sizes = res.map(item => Number(item["size"]));
+        const totalSize = sizes.reduce((acc, el) => acc + el, 0);
+        console.log(totalSize)
+        return totalSize;
+      });
+      };
+
+      typesOfFruitsFromCsv() {
         return cy.task("readFromCsv").then(res => {
-          let result = [];
-          for (let i = 0; i < res.length; i++) {
-            let size = Number(res[i]["size"]); 
-            result.push(size);
-          }
-          let totalSize = result.reduce((acc, el) => acc + el, 0);
-          return totalSize;
+          const uniqueFruitTypes = [...new Set(res.map(item => item["name"]))];
+          const totalUniqueFruitTypes = uniqueFruitTypes.length;
+          console.log(totalUniqueFruitTypes)
+          return totalUniqueFruitTypes;
+        });
+      };
+
+      writeAllDataToCsv(totalSize, totalUniqueFruitTypes) {
+        const dataToWrite = [
+          { name: "Total number of fruit: ", amount: totalSize },
+          { name: "Total types of fruit: ", amount: totalUniqueFruitTypes },
+        ];
+      
+        return cy.task("writeToCSV", {
+          name: 'results',
+          rows: dataToWrite
         });
       }
-      
-      addDataToCsv() {
-        return this.countSizeFromCsv().then(totalSize => {
-          const dataToWrite = [{ name: "Total number of fruit: ", amount: totalSize }];
-      
-          return cy.task("writeToCSV", {
-            name: 'results', 
-            rows: dataToWrite
-          });
-        });
-      }
-      
+        
 };
 
 const fruitsPage = new FruitsPage();
