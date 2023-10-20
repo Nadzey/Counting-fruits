@@ -11,9 +11,9 @@ The `Cypress` framework, along with `JavaScript`, `Mocha`, and `Chai`, provides 
 
 2. Navigate to project root folder.
 
-3. Run command ```npm ci``` in terminal VScode.
+3. Run command ```npm ci``` in code editor node.js terminal (VScode for example).
    
-4. Create new branch
+4. Create new branch.
 
 5. After, execute ```npx cypress open```  to run tests.
    
