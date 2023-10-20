@@ -1,5 +1,5 @@
 # Counting-fruits
-simple application that allows a user to request a file (basket)
+Here's a simple application that allows a user to request a file (basket) and returns the results of those requests in a file called "results.csv."
 ## Framework Description: Cypress + JavaScript + Mocha + Chai E2E Testing for Counting fruits project
 
 ### Overview
@@ -19,7 +19,7 @@ The `Cypress` framework, along with `JavaScript`, `Mocha`, and `Chai`, provides 
    
 6. For running tests with reports use ```npx cypress run --headed --browser chrome```
    
-8. The result.cvs file will created
+8. The results.cvs file will created
 
 **Project Coding Convention**
 
