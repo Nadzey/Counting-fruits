@@ -4,8 +4,7 @@ class FruitsPage {
     constructor() {
     };
 
-
-    getDataFromCsv() {
+    countSizeFromCsv() {
         return cy.task("readFromCsv").then(res => {
           let result = [];
           for (let i = 0; i < res.length; i++) {
@@ -18,7 +17,7 @@ class FruitsPage {
       }
       
       addDataToCsv() {
-        return this.getDataFromCsv().then(totalSize => {
+        return this.countSizeFromCsv().then(totalSize => {
           const dataToWrite = [{ name: "Total number of fruit: ", amount: totalSize }];
       
           return cy.task("writeToCSV", {
