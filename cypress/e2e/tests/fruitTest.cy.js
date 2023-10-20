@@ -4,8 +4,9 @@ import fruitsPage from '../pageObject/fruitsPage.js';
 describe('Counting fruits data from csv file', () => {
   let totalSize;
   let uniqueFruitTypes;
+  let amountEachFruit;
 
-  it("AT_001.001 | should return result in csv file", () => {
+  it("AT_001.001 | should count amount of all fruits", () => {
     fruitsPage.countSizeFromCsv().then(size => {
       totalSize = size;
     });
@@ -17,8 +18,14 @@ describe('Counting fruits data from csv file', () => {
     });
   });
 
+  it("AT_001.003 | should count the amount of each fruit", () => {
+    fruitsPage.countNumbersOfEachFruits().then(amount => {
+      amountEachFruit = amount;
+    });
+  });
+
   after(() => {
-    fruitsPage.writeAllDataToCsv(totalSize, uniqueFruitTypes);
+    fruitsPage.writeAllDataToCsv(totalSize, uniqueFruitTypes, amountEachFruit);
   });
 });
 
