@@ -68,8 +68,7 @@ class FruitsPage {
         return outputMessage1;
       });
     }
-    
-    
+     
     countInTheBasketOverThreeDays() {
       return cy.task("readFromCsv").then(res => {
         const basket = {};
@@ -108,9 +107,15 @@ class FruitsPage {
         name: 'results',
         rows: dataToWrite
       });
-    }
+    };
     
-        
+    checkFileContent() {
+      return cy.task("readFromNewCsv").then(fileContent => {
+        const fileContentString = fileContent.join('\n');
+        console.log(fileContentString)
+        return fileContentString;
+    });
+  };
 };
 
 const fruitsPage = new FruitsPage();

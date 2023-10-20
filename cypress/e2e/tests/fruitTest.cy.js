@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import fruitsPage from '../pageObject/fruitsPage.js';
+import { data } from '../../fixtures/fruitsData.json'
 
 describe('Counting fruits data from csv file', () => {
   let totalSize;
@@ -30,6 +31,9 @@ describe('Counting fruits data from csv file', () => {
     fruitsPage.characteristicsOfFruits().then(char => {
       characteristicsFruits = char;
     });
+  });
+
+  it("AT_001.005 | Have any fruit been in the basket for over 3 days", () => {
     fruitsPage.countInTheBasketOverThreeDays().then(count => {
       countOverThreeDays = count;
     })
@@ -37,7 +41,16 @@ describe('Counting fruits data from csv file', () => {
 
   after(() => {
     fruitsPage.writeAllDataToCsv(totalSize, uniqueFruitTypes, amountEachFruit, characteristicsFruits, countOverThreeDays);
-  });
+
+    cy.wait(3000); 
+    fruitsPage.checkFileContent().then(fileContent => {
+      expect(fileContent).to.contain(data.firstTask);
+      expect(fileContent).to.contain(data.secondTask);
+      expect(fileContent).to.contain(data.thirdTask);
+      expect(fileContent).to.contain(data.fourthTask);
+      expect(fileContent).to.contain(data.fifthTask);
+    });
+  });  
 });
 
 
