@@ -1,61 +1,64 @@
-/// <reference types="cypress" />
+const { defineConfig } = require("cypress");
+const csv = require('@fast-csv/parse');
+const { writeToPath } = require('@fast-csv/format');
 
-class FruitsPage {
-    constructor() {
-    };
+module.exports = defineConfig({
+  viewportWidth: 1920,
+   viewportHeight: 1080,
+   chromeWebSecurity: false,
+   defaultCommandTimeout: 7000,
+   waitForNavigation: true,
+   reporter: 'cypress-mochawesome-reporter',
+e2e: {
+   setupNodeEvents(on, config) {
+   screenshotOnRunFailure=true;
+   require('cypress-mochawesome-reporter/plugin')(on);
 
-    countSizeFromCsv() {
-      return cy.task("readFromCsv").then(res => {
-        const sizes = res.map(item => Number(item["size"]));
-        const totalSize = sizes.reduce((acc, el) => acc + el, 0);
-        return totalSize;
-      });
-      };
-
-    countNumbersOfEachFruits(){
-      return cy.task("readFromCsv").then(res => {
-        const fruits = res.map(item => item["name"]);
-        const numbersOfFruits = fruits.reduce((acc, fruit) => {
-          if (!acc[fruit]) {
-            acc[fruit] = 1;
-          } else {
-            acc[fruit]++;
-          }
-          return acc;
-        }, {});
-        return numbersOfFruits;
+   on("task", {
+    readFromCsv()
+    {
+      return new Promise(resolve => {
+        let dataArray = [];
+        csv.parseFile("basket.csv", {headers: true})
+        .on('data', (data) => {
+          dataArray.push(data);
+        })
+        .on('end', () => {
+          resolve(dataArray)
+        })
       })
     }
+   });
 
-      typesOfFruitsFromCsv() {
-        return cy.task("readFromCsv").then(res => {
-          const uniqueFruitTypes = [...new Set(res.map(item => item["name"]))];
-          const totalUniqueFruitTypes = uniqueFruitTypes.length;
-          return totalUniqueFruitTypes;
-        });
-      };
+   on("task", {
+    writeToCSV({ name, rows }) {
+      return new Promise((resolve, reject) => {
+        writeToPath(`./${name}.csv`, rows)
+          .on("finish", () => {
+            resolve(null); 
+          })
+          .on("error", (error) => {
+            reject(error); 
+          });
+      });
+    }
+  });  
 
-      writeAllDataToCsv(totalSize, totalUniqueFruitTypes, numbersOfFruits) {
-        const numbersOfFruitsString = JSON.stringify(numbersOfFruits);
-        const lines = [];
-        for (const fruit in numbersOfFruits) {
-          lines.push(`${fruit}: ${numbersOfFruits[fruit]}`);
-        }
-        const numbersOfFruitsLines = lines.join(', ');
-
-        const dataToWrite = [
-          { name: "Total number of fruit: ", amount: totalSize },
-          { name: "Total types of fruit: ", amount: totalUniqueFruitTypes },
-          { name: "The number of each type of fruit in descending order: ", amount: numbersOfFruitsLines}
-        ];
-      
-        return cy.task("writeToCSV", {
-          name: 'results',
-          rows: dataToWrite
-        });
-      }
-        
-};
-
-const fruitsPage = new FruitsPage();
-export default fruitsPage;
+  on("task", {
+    readFromNewCsv()
+    {
+      return new Promise(resolve => {
+        let dataArray = [];
+        csv.parseFile("results.csv", {headers: false})
+        .on('data', (data) => {
+          dataArray.push(data);
+        })
+        .on('end', () => {
+          resolve(dataArray)
+        })
+      })
+    }
+   });
+ },
+},  
+});

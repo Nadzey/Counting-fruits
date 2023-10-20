@@ -1,0 +1,10 @@
+{ 
+  "data":
+      {
+        "firstTask": "Total number of fruit:",
+        "secondTask": "Total types of fruit:",
+        "thirdTask": "The number of each type of fruit in descending order:",
+        "fourthTask": "The characteristics (size, color, shape, etc.) of each fruit by type:",
+        "fifthTask": "Have any fruit been in the basket for over 3 days"
+      }
+}
