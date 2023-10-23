@@ -48,28 +48,39 @@ class FruitsPage {
     
         res.forEach(item => {
           const fruitName = item["name"];
-          const size = Number(item["size"]);
           const color = item["color"];
           const shape = item["shape"];
+          const size = Number(item["size"]);
     
           if (!characteristics[fruitName]) {
             characteristics[fruitName] = {
-              size,
-              color,
-              shape,
+              count: 1,
+              colors: [color],
+              shapes: [shape],
+              sizes: [size],
             };
           } else {
-            characteristics[fruitName].size += size;
+            characteristics[fruitName].count += 1;
+            if (!characteristics[fruitName].colors.includes(color)) {
+              characteristics[fruitName].colors.push(color);
+            }
+            if (!characteristics[fruitName].shapes.includes(shape)) {
+              characteristics[fruitName].shapes.push(shape);
+            }
+            characteristics[fruitName].sizes.push(size);
           }
         });
     
-        const outputMessage1 = Object.entries(characteristics)
-        .map(([fruit, charData]) => `${charData.size} ${fruit}: ${charData.color}, ${charData.shape}`)
-        .join(";\n");
+        const outputMessage = Object.entries(characteristics)
+          .map(([fruit, charData]) => {
+            const { count, colors, shapes, sizes } = charData;
+            return `${count} ${fruit}: Colors: ${colors.join(", ")}, Shapes: ${shapes.join(", ")}, Sizes: ${sizes.join(", ")}`;
+          })
+          .join(";\n");
     
-        return outputMessage1;
+        return outputMessage;
       });
-    };
+    }
      
     countInTheBasketOverThreeDays() {
       return cy.task("readFromCsv").then((res) => {
@@ -78,23 +89,23 @@ class FruitsPage {
         res.forEach((item) => {
           const fruitName = item["name"];
           const days = Number(item["days"]);
-          const size = Number(item["size"]);
     
           if (days > 3) {
             if (!basket[fruitName]) {
-              basket[fruitName] = size;
+              basket[fruitName] = 1;
             } else {
-              basket[fruitName] += size;
+              basket[fruitName] += 1;
             }
           }
         });
     
         const outputMessage = Object.entries(basket)
-          .map(([fruit, size]) => `${size} ${fruit}`)
+          .map(([fruit, count]) => `${count} ${fruit}`)
           .join(" and ");
         return outputMessage;
       });
-    };
+    }
+    
     
     writeAllDataToCsv(totalSize, totalUniqueFruitTypes, totalSizeLines, outputMessage1, outputMessage) {
     
