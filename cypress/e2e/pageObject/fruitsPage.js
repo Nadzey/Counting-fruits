@@ -36,23 +36,22 @@ class FruitsPage {
 
     countNumbersOfEachFruits() {
       return cy.task("readFromCsv").then((res) => {
-        const totalSize = {};
+        const totalByName = {};
     
         res.forEach((item) => {
           const name = item.name;
-          const size = Number(item.size);
     
-          if (!totalSize[name]) {
-            totalSize[name] = size;
+          if (!totalByName[name]) {
+            totalByName[name] = 1;
           } else {
-            totalSize[name] += size;
+            totalByName[name] += 1;
           }
         });
     
-        const sortedEntries = Object.entries(totalSize)
+        const sortedEntries = Object.entries(totalByName)
           .sort((a, b) => b[1] - a[1]);
     
-        const lines = sortedEntries.map(([fruit, size]) => `${fruit}: ${size}`);
+        const lines = sortedEntries.map(([fruit, count]) => `${fruit}: ${count}`);
         const totalSizeLines = lines.join(', ');
     
         return totalSizeLines;

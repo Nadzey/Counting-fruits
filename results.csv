@@ -1,6 +1,6 @@
 Total number of fruit: ,11
 Total types of fruit: ,6
-The number of each type of fruit in descending order: ,"apple: 27, grape: 20, pear: 10, orange: 6, pineapple: 3, grapefruit: 3"
+The number of each type of fruit in descending order: ,"apple: 3, orange: 2, grape: 2, pear: 2, pineapple: 1, grapefruit: 1"
 The characteristics of each fruit by type: ,"2 orange: Shapes: round, Colors: red, orange , Sizes: 4, 2;
 1 pineapple: Shapes: round, Colors: yellow, Sizes: 3;
 2 grape: Shapes: flat, round, Colors: white, green, Sizes: 10, 10;
@@ -8,4 +8,3 @@ The characteristics of each fruit by type: ,"2 orange: Shapes: round, Colors: re
 3 apple: Shapes: flat, round, Colors: red, Sizes: 20, 5, 2;
 1 grapefruit: Shapes: flat, Colors: green, Sizes: 3"
 Have any fruit been in the basket for over 3 days: ,1 pineapple and 2 grape and 2 pear
-
