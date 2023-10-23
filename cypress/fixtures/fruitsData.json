@@ -3,8 +3,8 @@
       {
         "firstTask": "Total number of fruit: ,69",
         "secondTask": "Total types of fruit: ,6",
-        "thirdTask": "The number of each type of fruit in descending order: ,orange: 6, pineapple: 3, grape: 20, pear: 10, apple: 27, grapefruit: 3",
-        "fourthTask": "\nThe characteristics of each fruit by type: ,4 orange: red, round;\n3 pineapple: yellow, round;\n10 grape: white, flat;\n10 pear: white, round;\n20 apple: red, flat;\n2 orange: orange , round;\n10 grape: green, round;\n3 grapefruit: green, flat;\n7 apple: red, round\nHave any fruit been in the basket for over 3 days: ,3 pineapple and 20 grape and 10 pear",
+        "thirdTask": "\nThe number of each type of fruit in descending order: ,apple: 27, grape: 20, pear: 10, orange: 6, pineapple: 3, grapefruit: 3\n",
+        "fourthTask": "\nThe characteristics of each fruit by type: ,6 orange: red, orange , round;\n3 pineapple: yellow, round;\n20 grape: white, green, flat, round;\n10 pear: white, round;\n27 apple: red, flat, round;\n3 grapefruit: green, flat",
         "fifthTask": "Have any fruit been in the basket for over 3 days: ,3 pineapple and 20 grape and 10 pear"
       }
 }

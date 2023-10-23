@@ -20,7 +20,7 @@ class FruitsPage {
       });
     };
 
-    countNumbersOfEachFruits(){
+    countNumbersOfEachFruits() {
       return cy.task("readFromCsv").then((res) => {
         const totalSize = {};
     
@@ -35,12 +35,17 @@ class FruitsPage {
           }
         });
     
-        const lines = Object.entries(totalSize).map(([fruit, size]) => `${fruit}: ${size}`);
+        const fruitSizeArray = Object.entries(totalSize);
+    
+        fruitSizeArray.sort((a, b) => b[1] - a[1]);
+    
+        const lines = fruitSizeArray.map(([fruit, size]) => `${fruit}: ${size}`);
         const totalSizeLines = lines.join(', ');
     
         return totalSizeLines;
       });
-    };
+    }
+    
 
     characteristicsOfFruits() {
       return cy.task("readFromCsv").then((res) => {
@@ -48,33 +53,42 @@ class FruitsPage {
     
         res.forEach(item => {
           const fruitName = item["name"];
-          const size = Number(item["size"]);
           const color = item["color"];
           const shape = item["shape"];
-
-          const uniqueKey = `${fruitName}-${color}-${shape}`;
-        
+          const size = Number(item["size"]);
+    
+          const uniqueKey = fruitName;
+    
           if (!characteristics[uniqueKey]) {
             characteristics[uniqueKey] = {
               size,
-              color,
-              shape,
+              colors: [color],
+              shapes: [shape],
             };
           } else {
             characteristics[uniqueKey].size += size;
+    
+            if (!characteristics[uniqueKey].colors.includes(color)) {
+              characteristics[uniqueKey].colors.push(color);
+            }
+    
+            if (!characteristics[uniqueKey].shapes.includes(shape)) {
+              characteristics[uniqueKey].shapes.push(shape);
+            }
           }
         });
     
         const outputMessage1 = Object.entries(characteristics)
-          .map(([key, charData]) => {
-            const [fruitName, color, shape] = key.split('-');
-            return `${charData.size} ${fruitName}: ${color}, ${shape}`;
+          .map(([fruitName, charData]) => {
+            const { size, colors, shapes } = charData;
+            return `${size} ${fruitName}: ${colors.join(', ')}, ${shapes.join(', ')}`;
           })
           .join(";\n");
     
         return outputMessage1;
       });
-    };
+    }
+    
     
      
     countInTheBasketOverThreeDays() {
