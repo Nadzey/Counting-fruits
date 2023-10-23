@@ -55,7 +55,7 @@ describe('Counting fruits data from csv file', () => {
 ```cypress.env.json```
 
 ### Key Features
-- **End-to-End Testing**: The framework enables comprehensive testing of the Peshkariki courier service, covering the entire application flow from order creation to delivery tracking.
+- **End-to-End Testing**: The framework enables comprehensive testing of the Counting fruits ptoject, covering the entire application flow from order creation to delivery tracking.
 - **Automation**: Cypress and JavaScript provide powerful automation capabilities, allowing businesses to automate repetitive tasks such as order placement, form filling, status updates, and delivery details verification.
 - **Mocha Test Framework**: Mocha provides a flexible and powerful test framework, enabling businesses to write clear and structured tests in a style that suits their preferences, whether it's BDD or TDD.
 - **Chai Assertion Library**: Chai offers a wide range of assertion styles and expressive syntax, empowering businesses to write concise and readable assertions to validate the expected behavior of the courier service.
