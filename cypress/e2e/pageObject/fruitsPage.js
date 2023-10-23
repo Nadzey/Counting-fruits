@@ -34,7 +34,7 @@ class FruitsPage {
       });
     };
 
-    countNumbersOfEachFruits() {
+    countNumbersOfEachFruits(){
       return cy.task("readFromCsv").then((res) => {
         const totalSize = {};
     
@@ -49,17 +49,12 @@ class FruitsPage {
           }
         });
     
-        const fruitSizeArray = Object.entries(totalSize);
-    
-        fruitSizeArray.sort((a, b) => b[1] - a[1]);
-    
-        const lines = fruitSizeArray.map(([fruit, size]) => `${fruit}: ${size}`);
+        const lines = Object.entries(totalSize).map(([fruit, size]) => `${fruit}: ${size}`);
         const totalSizeLines = lines.join(', ');
     
         return totalSizeLines;
       });
-    }
-    
+    };
 
     characteristicsOfFruits() {
       return cy.task("readFromCsv").then((res) => {
