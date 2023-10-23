@@ -51,25 +51,31 @@ class FruitsPage {
           const size = Number(item["size"]);
           const color = item["color"];
           const shape = item["shape"];
-    
-          if (!characteristics[fruitName]) {
-            characteristics[fruitName] = {
+
+          const uniqueKey = `${fruitName}-${color}-${shape}`;
+        
+          if (!characteristics[uniqueKey]) {
+            characteristics[uniqueKey] = {
               size,
               color,
               shape,
             };
           } else {
-            characteristics[fruitName].size += size;
+            characteristics[uniqueKey].size += size;
           }
         });
     
         const outputMessage1 = Object.entries(characteristics)
-        .map(([fruit, charData]) => `${charData.size} ${fruit}: ${charData.color}, ${charData.shape}`)
-        .join(";\n");
+          .map(([key, charData]) => {
+            const [fruitName, color, shape] = key.split('-');
+            return `${charData.size} ${fruitName}: ${color}, ${shape}`;
+          })
+          .join(";\n");
     
         return outputMessage1;
       });
     };
+    
      
     countInTheBasketOverThreeDays() {
       return cy.task("readFromCsv").then((res) => {
