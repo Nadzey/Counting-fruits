@@ -6,11 +6,25 @@ class FruitsPage {
 
     countSizeFromCsv() {
       return cy.task("readFromCsv").then(res => {
-        const sizes = res.map(item => Number(item["size"]));
-        const totalSize = sizes.reduce((acc, el) => acc + el, 0);
-        return totalSize;
+        const totalByName = {};
+    
+        res.forEach(item => {
+          const name = item["name"];
+    
+          if (!totalByName[name]) {
+            totalByName[name] = 1;
+          } else {
+            totalByName[name] += 1;
+          }
+        });
+    
+        const totalCount = Object.values(totalByName).reduce((acc, count) => acc + count, 0);
+        console.log(totalCount);
+        return totalCount;
       });
-    };
+    }
+    
+    
 
     typesOfFruitsFromCsv() {
       return cy.task("readFromCsv").then(res => {
@@ -79,7 +93,7 @@ class FruitsPage {
         const outputMessage = Object.entries(characteristics)
           .map(([fruit, charData]) => {
             const { count, colors, shapes, sizes } = charData;
-            return `${count} ${fruit}: Colors: ${colors.join(", ")}, Shapes: ${shapes.join(", ")}, Sizes: ${sizes.join(", ")}`;
+            return `${count} ${fruit}: Shapes: ${shapes.join(", ")}, Colors: ${colors.join(", ")}, Sizes: ${sizes.join(", ")}`;
           })
           .join(";\n");
     
