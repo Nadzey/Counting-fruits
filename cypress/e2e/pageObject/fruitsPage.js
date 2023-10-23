@@ -20,7 +20,7 @@ class FruitsPage {
       });
     };
 
-    countNumbersOfEachFruits() {
+    countNumbersOfEachFruits(){
       return cy.task("readFromCsv").then((res) => {
         const totalSize = {};
     
@@ -35,17 +35,12 @@ class FruitsPage {
           }
         });
     
-        const fruitSizeArray = Object.entries(totalSize);
-    
-        fruitSizeArray.sort((a, b) => b[1] - a[1]);
-    
-        const lines = fruitSizeArray.map(([fruit, size]) => `${fruit}: ${size}`);
+        const lines = Object.entries(totalSize).map(([fruit, size]) => `${fruit}: ${size}`);
         const totalSizeLines = lines.join(', ');
     
         return totalSizeLines;
       });
-    }
-    
+    };
 
     characteristicsOfFruits() {
       return cy.task("readFromCsv").then((res) => {
@@ -57,39 +52,35 @@ class FruitsPage {
           const shape = item["shape"];
           const size = Number(item["size"]);
     
-          const uniqueKey = fruitName;
-    
-          if (!characteristics[uniqueKey]) {
-            characteristics[uniqueKey] = {
-              size,
+          if (!characteristics[fruitName]) {
+            characteristics[fruitName] = {
+              count: 1,
               colors: [color],
               shapes: [shape],
+              sizes: [size],
             };
           } else {
-            characteristics[uniqueKey].size += size;
-    
-            if (!characteristics[uniqueKey].colors.includes(color)) {
-              characteristics[uniqueKey].colors.push(color);
+            characteristics[fruitName].count += 1;
+            if (!characteristics[fruitName].colors.includes(color)) {
+              characteristics[fruitName].colors.push(color);
             }
-    
-            if (!characteristics[uniqueKey].shapes.includes(shape)) {
-              characteristics[uniqueKey].shapes.push(shape);
+            if (!characteristics[fruitName].shapes.includes(shape)) {
+              characteristics[fruitName].shapes.push(shape);
             }
+            characteristics[fruitName].sizes.push(size);
           }
         });
     
-        const outputMessage1 = Object.entries(characteristics)
-          .map(([fruitName, charData]) => {
-            const { size, colors, shapes } = charData;
-            return `${size} ${fruitName}: ${colors.join(', ')}, ${shapes.join(', ')}`;
+        const outputMessage = Object.entries(characteristics)
+          .map(([fruit, charData]) => {
+            const { count, colors, shapes, sizes } = charData;
+            return `${count} ${fruit}: Colors: ${colors.join(", ")}, Shapes: ${shapes.join(", ")}, Sizes: ${sizes.join(", ")}`;
           })
           .join(";\n");
     
-        return outputMessage1;
+        return outputMessage;
       });
     }
-    
-    
      
     countInTheBasketOverThreeDays() {
       return cy.task("readFromCsv").then((res) => {
@@ -98,23 +89,23 @@ class FruitsPage {
         res.forEach((item) => {
           const fruitName = item["name"];
           const days = Number(item["days"]);
-          const size = Number(item["size"]);
     
           if (days > 3) {
             if (!basket[fruitName]) {
-              basket[fruitName] = size;
+              basket[fruitName] = 1;
             } else {
-              basket[fruitName] += size;
+              basket[fruitName] += 1;
             }
           }
         });
     
         const outputMessage = Object.entries(basket)
-          .map(([fruit, size]) => `${size} ${fruit}`)
+          .map(([fruit, count]) => `${count} ${fruit}`)
           .join(" and ");
         return outputMessage;
       });
-    };
+    }
+    
     
     writeAllDataToCsv(totalSize, totalUniqueFruitTypes, totalSizeLines, outputMessage1, outputMessage) {
     
